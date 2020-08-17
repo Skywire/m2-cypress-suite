@@ -1,0 +1,12 @@
+{
+  "name": "m2-cypress-suite",
+  "version": "1.0.0",
+  "author": "tech@skywire.co.uk",
+  "description": "Cypress test suite for Magento 2",
+  "license": "(OSL-3.0 OR AFL-3.0)",
+  "scripts": {},
+  "keywords": [],
+  "dependencies": {
+    "cypress": "^4.12.1"
+  }
+}
