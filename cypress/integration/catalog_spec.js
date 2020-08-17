@@ -9,7 +9,7 @@ describe('Catalog Test', () => {
         cy.get('.product-item').should('have.length.at.least', 4);
     });
 
-    it.only('Add a product to the cart', () => {
+    it('Add a product to the cart', () => {
         cy.server();
         cy.route('POST', '**/checkout/**').as('addToCart')
 
