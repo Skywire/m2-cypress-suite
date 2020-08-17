@@ -4,9 +4,16 @@
   "author": "tech@skywire.co.uk",
   "description": "Cypress test suite for Magento 2",
   "license": "(OSL-3.0 OR AFL-3.0)",
-  "scripts": {},
+  "scripts": {
+    "open": "cypress open",
+    "test": "cypress run"
+  },
   "keywords": [],
   "dependencies": {
-    "cypress": "^4.12.1"
+    "cypress": "^4.12.1",
+    "cypress-intellij-reporter": "^0.0.4"
+  },
+  "devDependencies": {
+    "cypress-intellij-reporter": "0.0.4"
   }
 }
