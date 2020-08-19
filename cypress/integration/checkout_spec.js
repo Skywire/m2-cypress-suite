@@ -34,18 +34,8 @@ describe('Checkout - Critical Path - Guest', () => {
 
         cy.get('.continue[type="submit"]:first').click();
 
-        Object.entries(shippingAddress).forEach((keyValuePair) => {
-            let [field, value] = keyValuePair;
-            let selector = `:input[name^="${field}"]:visible`;
-
-            if (field === 'country_id') {
-                cy.get(selector).select(value);
-            } else {
-                cy.get(selector).type(value);
-            }
-
-            cy.get(selector).should('have.value', value);
-        });
+        const addressHandler = require('../functions/populateAndVerifyShippingAddress')
+        addressHandler(shippingAddress);
 
         cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
 
