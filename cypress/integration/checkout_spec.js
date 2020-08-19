@@ -1,5 +1,5 @@
-import setupCart from "../functions/setupCart";
-
+const setupCart = require('./../functions/setupCart');
+const addressHandler = require('../functions/populateAndVerifyShippingAddress')
 const shippingAddress = {
     firstname: "Randy",
     lastname: "Savage",
@@ -16,7 +16,6 @@ describe('Checkout - Critical Path - Guest', () => {
     });
 
     before(() => {
-        const setupCart = require('./../functions/setupCart');
 
         setupCart(['radiantTeeAddToCart.json']);
     });
@@ -34,7 +33,6 @@ describe('Checkout - Critical Path - Guest', () => {
 
         cy.get('.continue[type="submit"]:first').click();
 
-        const addressHandler = require('../functions/populateAndVerifyShippingAddress')
         addressHandler(shippingAddress);
 
         cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
