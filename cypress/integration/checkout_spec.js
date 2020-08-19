@@ -11,9 +11,12 @@ const shippingAddress = {
 describe('Checkout - Critical Path - Guest', () => {
     beforeEach(() => {
         Cypress.Cookies.preserveOnce('PHPSESSID');
-    })
+    });
 
     before(() => {
+        cy.server();
+        cy.route('POST', '**/payment-information').as('paymentInformation')
+
         cy.fixture('radiantTeeAddToCart.json').then((postData) => {
 
             cy.request({
@@ -23,14 +26,13 @@ describe('Checkout - Critical Path - Guest', () => {
                 body: postData
             })
         });
-    })
+    });
 
     it('View Cart', () => {
         cy.visit('/checkout/cart').contains('Proceed to Checkout');
-        cy.screenshot();
     });
 
-    it('Guest Email', () => {
+    it.only('Checkout', () => {
         cy.visit('/checkout');
         cy.contains('Order Summary');
         cy.contains('Email Address');
@@ -38,11 +40,6 @@ describe('Checkout - Critical Path - Guest', () => {
         cy.get('input[name="username"]:visible').type('a@a.com');
 
         cy.get('.continue[type="submit"]:first').click();
-    });
-
-    it('Shipping Step', () => {
-
-        cy.visit('/checkout#shipping');
 
         Object.entries(shippingAddress).forEach((keyValuePair) => {
             let [field, value] = keyValuePair;
@@ -63,6 +60,14 @@ describe('Checkout - Critical Path - Guest', () => {
 
         cy.contains('Payment Method');
 
-        cy.screenshot();
+        // cy.get('label[for="checkmo"]').click();
+
+        cy.get('#billing-address-same-as-shipping-checkmo').should('be.checked');
+
+        cy.get('button.checkout[type="submit"]:visible').click();
+
+        cy.wait('@paymentInformation', {timeout: (60 * 1000) * 3});
+
+        cy.contains('Thank you for your purchase!');
     });
 })
