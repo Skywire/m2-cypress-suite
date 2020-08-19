@@ -10,13 +10,18 @@ const shippingAddress = {
     telephone: '01234567890',
 }
 
-describe('Checkout - Critical Path - Guest', () => {
+describe('Checkout - Critical Path - Existing Customer', () => {
     beforeEach(() => {
         Cypress.Cookies.preserveOnce('PHPSESSID');
     });
 
-    before(() => {
+    const username = 'registered@example.com';
+    const password = 'dRYa2J3SpV0Y';
 
+    before(() => {
+        cy.exec('/usr/local/bin/n98 --root-dir=/home/neil/development/magento24 db:query "delete from customer_entity"');
+        let userCommand = `/usr/local/bin/n98 --root-dir=/home/neil/development/magento24 customer:create ${username} ${password} A Customer 1`
+        cy.exec(userCommand);
         setupCart(['radiantTeeAddToCart.json']);
     });
 
@@ -24,12 +29,13 @@ describe('Checkout - Critical Path - Guest', () => {
         cy.visit('/checkout/cart').contains('Proceed to Checkout');
     });
 
-    it.only('Checkout', () => {
+    it('Checkout', () => {
         cy.visit('/checkout');
         cy.contains('Order Summary');
         cy.contains('Email Address');
 
-        cy.get('input[name="username"]:visible').type('a@a.com');
+        cy.get('input[name="username"]:visible').type(username);
+        cy.get('input[name="password"]:visible').type(password);
 
         cy.get('.continue[type="submit"]:first').click();
 
@@ -46,5 +52,6 @@ describe('Checkout - Critical Path - Guest', () => {
         cy.get('button.checkout[type="submit"]:visible').click();
 
         cy.contains('Thank you for your purchase!');
+        cy.get('.content').should('not.contain', 'Create an Account');
     });
 })
