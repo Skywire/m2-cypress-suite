@@ -6,7 +6,7 @@ export default (shippingAddress = {}) => {
         if (field === 'country_id') {
             cy.get(selector).select(value);
         } else {
-            cy.get(selector).type(value);
+            cy.get(selector).clear().type(value);
         }
 
         cy.get(selector).should('have.value', value);
