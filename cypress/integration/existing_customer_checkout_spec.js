@@ -1,5 +1,7 @@
 const setupCart = require('./../functions/setupCart');
 const addressHandler = require('../functions/populateAndVerifyShippingAddress')
+const n98 = require('../functions/n98');
+
 const shippingAddress = {
     firstname: "Randy",
     lastname: "Savage",
@@ -10,7 +12,7 @@ const shippingAddress = {
     telephone: '01234567890',
 }
 
-describe('Checkout - Critical Path - Existing Customer', () => {
+describe.only('Checkout - Critical Path - Existing Customer', () => {
     beforeEach(() => {
         Cypress.Cookies.preserveOnce('PHPSESSID');
     });
@@ -19,9 +21,8 @@ describe('Checkout - Critical Path - Existing Customer', () => {
     const password = 'dRYa2J3SpV0Y';
 
     before(() => {
-        cy.exec('/usr/local/bin/n98 --root-dir=/home/neil/development/magento24 db:query "delete from customer_entity"');
-        let userCommand = `/usr/local/bin/n98 --root-dir=/home/neil/development/magento24 customer:create ${username} ${password} A Customer 1`
-        cy.exec(userCommand);
+        n98('db:query "delete from customer_entity"');
+        n98(`customer:create ${username} ${password} A Customer 1`);
         setupCart(['radiantTeeAddToCart.json']);
     });
 
