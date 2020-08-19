@@ -1,3 +1,5 @@
+import setupCart from "../functions/setupCart";
+
 const shippingAddress = {
     firstname: "Randy",
     lastname: "Savage",
@@ -14,18 +16,9 @@ describe('Checkout - Critical Path - Guest', () => {
     });
 
     before(() => {
-        cy.server();
-        cy.route('POST', '**/payment-information').as('paymentInformation')
+        const setupCart = require('./../functions/setupCart');
 
-        cy.fixture('radiantTeeAddToCart.json').then((postData) => {
-
-            cy.request({
-                method: 'POST',
-                url: '/checkout/cart/add',
-                form: true,
-                body: postData
-            })
-        });
+        setupCart(['radiantTeeAddToCart.json']);
     });
 
     it('View Cart', () => {
@@ -60,13 +53,9 @@ describe('Checkout - Critical Path - Guest', () => {
 
         cy.contains('Payment Method');
 
-        // cy.get('label[for="checkmo"]').click();
-
         cy.get('#billing-address-same-as-shipping-checkmo').should('be.checked');
 
         cy.get('button.checkout[type="submit"]:visible').click();
-
-        cy.wait('@paymentInformation', {timeout: (60 * 1000) * 3});
 
         cy.contains('Thank you for your purchase!');
     });
