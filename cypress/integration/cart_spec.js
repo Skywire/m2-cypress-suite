@@ -1,6 +1,6 @@
 const setupCart = require('../functions/checkout/setupCart');
 
-describe('Cart', () => {
+describe('Critical Path - Checkout', () => {
     beforeEach(() => {
             setupCart(['radiantTeeAddToCart']);
         }

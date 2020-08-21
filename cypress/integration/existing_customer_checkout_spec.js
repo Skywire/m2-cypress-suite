@@ -12,7 +12,7 @@ const shippingAddress = {
     telephone: '01234567890',
 }
 
-describe('Checkout - Critical Path - Existing Customer', () => {
+describe('Critical Path - Checkout', () => {
     beforeEach(() => {
         Cypress.Cookies.preserveOnce('PHPSESSID');
     });
@@ -42,7 +42,7 @@ describe('Checkout - Critical Path - Existing Customer', () => {
         }
     );
 
-    it('Checkout - New Address', () => {
+    it('Existing Customer - New Address', () => {
         cy.visit('/checkout');
         cy.contains('Order Summary');
         cy.contains('Email Address');
@@ -71,7 +71,7 @@ describe('Checkout - Critical Path - Existing Customer', () => {
         cy.get('.content').should('not.contain', 'Create an Account');
     });
 
-    it('Checkout - Existing Address', () => {
+    it('Existing Customer - Existing Address', () => {
         cy.visit('/checkout');
 
         // login

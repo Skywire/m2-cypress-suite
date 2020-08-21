@@ -1,4 +1,4 @@
-describe('Catalog Test', () => {
+describe('Critical Path - Catalog', () => {
     it('Visit a category', () => {
         cy.visit('/')
 

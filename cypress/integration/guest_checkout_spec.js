@@ -10,7 +10,7 @@ const shippingAddress = {
     telephone: '01234567890',
 }
 
-describe('Checkout - Critical Path - Guest', () => {
+describe('Critical Path - Checkout', () => {
     beforeEach(() => {
         Cypress.Cookies.preserveOnce('PHPSESSID');
     });
@@ -19,7 +19,7 @@ describe('Checkout - Critical Path - Guest', () => {
         setupCart(['radiantTeeAddToCart']);
     });
 
-    it('Checkout', () => {
+    it('Guest Checkout', () => {
         cy.visit('/checkout');
         cy.contains('Order Summary');
         cy.contains('Email Address');
