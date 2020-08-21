@@ -12,7 +12,7 @@ const shippingAddress = {
     telephone: '01234567890',
 }
 
-describe.only('Checkout - Critical Path - Existing Customer', () => {
+describe('Checkout - Critical Path - Existing Customer', () => {
     beforeEach(() => {
         Cypress.Cookies.preserveOnce('PHPSESSID');
     });
@@ -20,7 +20,7 @@ describe.only('Checkout - Critical Path - Existing Customer', () => {
     const username = 'registered@example.com';
     const password = 'dRYa2J3SpV0Y';
 
-    before(() => {
+    beforeEach(() => {
             n98('db:query "delete from customer_entity"');
             n98(`customer:create ${username} ${password} A Customer 1`);
             setupCart(['radiantTeeAddToCart.json']);
@@ -72,6 +72,28 @@ describe.only('Checkout - Critical Path - Existing Customer', () => {
 
         cy.get('button.checkout[type="submit"]:visible').click();
 
+        cy.contains('Thank you for your purchase!');
+        cy.get('.content').should('not.contain', 'Create an Account');
+    });
+
+    it.only('Checkout - Existing Address', () => {
+        cy.visit('/checkout');
+
+        // Login
+        cy.get('input[name="username"]:visible').type(username);
+        cy.get('input[name="password"]:visible').type(password);
+        cy.get('button[type="submit"].login').click();
+
+        // shipping
+        cy.get('.action-select-shipping-item:first').click();
+        cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
+        cy.get('#shipping-method-buttons-container :input[type="submit"]').click();
+
+        // billing
+        cy.get('#billing-address-same-as-shipping-checkmo').should('be.checked');
+        cy.get('button.checkout[type="submit"]:visible').click();
+
+        // success
         cy.contains('Thank you for your purchase!');
         cy.get('.content').should('not.contain', 'Create an Account');
     });
