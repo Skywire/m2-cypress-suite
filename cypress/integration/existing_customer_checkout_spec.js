@@ -1,5 +1,5 @@
 const setupCart = require('../functions/checkout/setupCart');
-const addressHandler = require('../functions/checkout/populateAndVerifyShippingAddress')
+const addressHandler = require('../functions/checkout/populateAndVerifyAddress')
 const n98 = require('../functions/n98');
 
 const shippingAddress = {

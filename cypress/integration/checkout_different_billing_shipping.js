@@ -10,6 +10,16 @@ const shippingAddress = {
     telephone: '01234567890',
 }
 
+const billingAddress = {
+    firstname: "Randy",
+    lastname: "Savage",
+    country_id: 'GB',
+    street: "256 Fake St",
+    city: "FakeTown",
+    postcode: 'B2 2BB',
+    telephone: '01234567890',
+}
+
 describe('Critical Path - Checkout', () => {
     beforeEach(() => {
         Cypress.Cookies.preserveOnce('PHPSESSID');
@@ -19,27 +29,26 @@ describe('Critical Path - Checkout', () => {
         setupCart(['radiantTeeAddToCart']);
     });
 
-    it('Guest Checkout', () => {
+    it.only('Guest - Different Billing and Shipping', () => {
         cy.visit('/checkout');
-        cy.contains('Order Summary');
-        cy.contains('Email Address');
 
+        // login
         cy.get('input[name="username"]:visible').type('a@a.com');
-
         cy.get('.continue[type="submit"]:first').click();
 
+        // shipping
         addressHandler(shippingAddress);
-
         cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
-
         cy.get('#shipping-method-buttons-container :input[type="submit"]').click();
 
+        // billing
         cy.contains('Payment Method');
-
-        cy.get('#billing-address-same-as-shipping-checkmo').should('be.checked');
-
+        cy.get('#billing-address-same-as-shipping-checkmo').should('be.checked').uncheck();
+        addressHandler(billingAddress);
+        cy.get('.action-update').click();
         cy.get('button.checkout[type="submit"]:visible').click();
 
+        // success
         cy.contains('Thank you for your purchase!');
         cy.contains('Create an Account');
     });
