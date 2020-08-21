@@ -3,11 +3,16 @@
 ## Installation
 
 ```
+git clone git@github.com:Skywire/m2-cypress-suite.git
 npm install
 ```
 
 ## Usage
 
-`npx cypress open`
+### For interactive test runner
 
-https://docs.cypress.io/guides/getting-started/writing-your-first-test.html#Add-a-test-file
+`npm run open`
+
+### For automated test runner
+
+`npm run test`
