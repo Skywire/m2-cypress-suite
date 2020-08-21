@@ -1,0 +1,40 @@
+{
+  "customer":
+  {
+    "email": "registered@example.com",
+    "firstname": "A",
+    "lastname": "Shopper",
+    "storeId": 1,
+    "websiteId": 1,
+    "addresses": [
+      {
+        "firstname": "test",
+        "lastname": "test",
+        "company": "test technology",
+        "street": [
+          "Test Street 9"
+        ],
+        "city": "City Nine",
+        "region_id": 12,
+        "region": "California",
+        "postcode": "91790",
+        "country_id": "US",
+        "telephone": "1234567890"
+      },
+      {
+        "firstname": "test",
+        "lastname": "test",
+        "company": "test technology",
+        "street": [
+          "Test Street 10"
+        ],
+        "city": "City Ten",
+        "region_id": 12,
+        "region": "California",
+        "postcode": "91790",
+        "country_id": "US",
+        "telephone": "1234567890"
+      }
+    ]
+  }
+}

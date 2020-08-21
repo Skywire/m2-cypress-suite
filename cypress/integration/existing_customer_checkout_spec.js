@@ -31,52 +31,13 @@ describe.only('Checkout - Critical Path - Existing Customer', () => {
             }).then((response) => {
                 let token = response.body;
 
-                let customer = {
-                    "customer":
-                        {
-                            "email": username,
-                            "firstname": "A",
-                            "lastname": "Shopper",
-                            "storeId": 1,
-                            "websiteId": 1,
-                            "addresses": [
-                                {
-                                    "firstname": "test",
-                                    "lastname": "test",
-                                    "company": "test technology",
-                                    "street": [
-                                        "Test Street 9",
-                                    ],
-                                    "city": "City Nine",
-                                    "region_id": 12,
-                                    "region": "California",
-                                    "postcode": "91790",
-                                    "country_id": "US",
-                                    "telephone": "1234567890"
-                                },
-                                {
-                                    "firstname": "test",
-                                    "lastname": "test",
-                                    "company": "test technology",
-                                    "street": [
-                                        "Test Street 10",
-                                    ],
-                                    "city": "City Ten",
-                                    "region_id": 12,
-                                    "region": "California",
-                                    "postcode": "91790",
-                                    "country_id": "US",
-                                    "telephone": "1234567890"
-                                }
-                            ]
+                cy.fixture('customerWithAddresses').then((customer) => {
+                    cy.request({
+                        method: 'PUT', url: 'rest/V1/customers/me', body: customer, headers: {
+                            Authorization: `Bearer ${token}`
                         }
-                };
-
-                cy.request({
-                    method: 'PUT', url: 'rest/V1/customers/me', body: customer, headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+                    });
+                })
             });
         }
     );
