@@ -42,44 +42,39 @@ describe('Checkout - Critical Path - Existing Customer', () => {
         }
     );
 
-    it('View Cart', () => {
-        cy.visit('/checkout/cart').contains('Proceed to Checkout');
-    });
-
     it('Checkout - New Address', () => {
         cy.visit('/checkout');
         cy.contains('Order Summary');
         cy.contains('Email Address');
 
-        // Login
+        // login
         cy.get('input[name="username"]:visible').type(username);
         cy.get('input[name="password"]:visible').type(password);
         cy.get('button[type="submit"].login').click();
 
+        // shipping
         cy.get('.action-show-popup').click().then(() => {
             addressHandler(shippingAddress);
             // save address form
             cy.get('.action-save-address').click();
         });
-
         cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
-
         cy.get('#shipping-method-buttons-container :input[type="submit"]').click();
 
+        // billing
         cy.contains('Payment Method');
-
         cy.get('#billing-address-same-as-shipping-checkmo').should('be.checked');
-
         cy.get('button.checkout[type="submit"]:visible').click();
 
+        // success
         cy.contains('Thank you for your purchase!');
         cy.get('.content').should('not.contain', 'Create an Account');
     });
 
-    it.only('Checkout - Existing Address', () => {
+    it('Checkout - Existing Address', () => {
         cy.visit('/checkout');
 
-        // Login
+        // login
         cy.get('input[name="username"]:visible').type(username);
         cy.get('input[name="password"]:visible').type(password);
         cy.get('button[type="submit"].login').click();

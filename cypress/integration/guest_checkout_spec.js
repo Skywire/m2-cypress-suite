@@ -16,12 +16,7 @@ describe('Checkout - Critical Path - Guest', () => {
     });
 
     before(() => {
-
-        setupCart(['radiantTeeAddToCart.json']);
-    });
-
-    it('View Cart', () => {
-        cy.visit('/checkout/cart').contains('Proceed to Checkout');
+        setupCart(['radiantTeeAddToCart']);
     });
 
     it('Checkout', () => {
