@@ -1,5 +1,5 @@
-const setupCart = require('./../functions/setupCart');
-const addressHandler = require('../functions/populateAndVerifyShippingAddress')
+const setupCart = require('../functions/checkout/setupCart');
+const addressHandler = require('../functions/checkout/populateAndVerifyShippingAddress')
 const n98 = require('../functions/n98');
 
 const shippingAddress = {
@@ -97,6 +97,8 @@ describe.only('Checkout - Critical Path - Existing Customer', () => {
 
         cy.get('.action-show-popup').click().then(() => {
             addressHandler(shippingAddress);
+            // save address form
+            cy.get('.action-save-address').click();
         });
 
         cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
