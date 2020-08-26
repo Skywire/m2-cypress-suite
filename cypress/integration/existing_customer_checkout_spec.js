@@ -61,7 +61,7 @@ describe('Critical Path - Checkout', () => {
             cy.get('.action-save-address').click();
         });
 
-        cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
+        // cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
         cy.get('#shipping-method-buttons-container :input[type="submit"]').click();
 
         // billing
@@ -85,7 +85,7 @@ describe('Critical Path - Checkout', () => {
 
         // shipping
         cy.get('.action-select-shipping-item:first').click();
-        cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
+        // cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
         cy.get('#shipping-method-buttons-container :input[type="submit"]').click();
 
         // billing

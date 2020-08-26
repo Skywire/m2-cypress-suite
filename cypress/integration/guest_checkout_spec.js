@@ -30,12 +30,12 @@ describe('Critical Path - Checkout', () => {
 
         addressHandler(shippingAddress);
 
-        cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
+        // cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
 
         cy.get('#shipping-method-buttons-container :input[type="submit"]').click();
 
         cy.contains('Payment Method');
-
+        cy.get('#checkmo').check();
         cy.get('#billing-address-same-as-shipping-checkmo').should('be.checked');
 
         cy.get('button.checkout[type="submit"]:visible').click();
