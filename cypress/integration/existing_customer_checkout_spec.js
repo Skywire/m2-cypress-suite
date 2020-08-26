@@ -1,6 +1,6 @@
 const setupCart = require('../functions/checkout/setupCart');
 const addressHandler = require('../functions/checkout/populateAndVerifyAddress')
-const n98 = require('../functions/n98');
+const randomEmail = require('random-email');
 
 const shippingAddress = {
     firstname: "Randy",
@@ -17,32 +17,34 @@ describe('Critical Path - Checkout', () => {
         Cypress.Cookies.preserveOnce('PHPSESSID');
     });
 
-    const username = 'registered@example.com';
     const password = 'dRYa2J3SpV0Y';
+    let username = 'foo@example.com';
+    let token = null;
 
     beforeEach(() => {
-            n98('db:query "delete from customer_entity"');
-            n98(`customer:create ${username} ${password} A Customer 1`);
             setupCart(['radiantTeeAddToCart.json']);
 
-            cy.request('POST', `rest/V1/integration/customer/token`, {
-                "username": username,
-                "password": password
-            }).then((response) => {
-                let token = response.body;
+            username = randomEmail({domain: 'example.com'});
 
-                cy.fixture('customerWithAddresses').then((customer) => {
-                    cy.request({
-                        method: 'PUT', url: 'rest/V1/customers/me', body: customer, headers: {
-                            Authorization: `Bearer ${token}`
-                        }
-                    });
-                })
+            cy.fixture('customerWithAddresses').then((customer) => {
+                customer.customer.email = username;
+
+                cy.request({
+                    method: 'POST', url: 'rest/V1/customers', body: customer
+                }).then((response) => {
+                    debugger;
+                    cy.request('POST', `rest/V1/integration/customer/token`, {
+                        "username": username,
+                        "password": password
+                    }).then(response => {
+                        token = response.body;
+                    })
+                });
             });
         }
     );
 
-    it('Existing Customer - New Address', () => {
+    it.only('Existing Customer - New Address', () => {
         cy.visit('/checkout');
         cy.contains('Order Summary');
         cy.contains('Email Address');
@@ -58,11 +60,13 @@ describe('Critical Path - Checkout', () => {
             // save address form
             cy.get('.action-save-address').click();
         });
+
         cy.get(':input[value="flatrate_flatrate"]').check().should('be.checked');
         cy.get('#shipping-method-buttons-container :input[type="submit"]').click();
 
         // billing
         cy.contains('Payment Method');
+        cy.get('#checkmo').check();
         cy.get('#billing-address-same-as-shipping-checkmo').should('be.checked');
         cy.get('button.checkout[type="submit"]:visible').click();
 
@@ -85,6 +89,7 @@ describe('Critical Path - Checkout', () => {
         cy.get('#shipping-method-buttons-container :input[type="submit"]').click();
 
         // billing
+        cy.get('#checkmo').check();
         cy.get('#billing-address-same-as-shipping-checkmo').should('be.checked');
         cy.get('button.checkout[type="submit"]:visible').click();
 

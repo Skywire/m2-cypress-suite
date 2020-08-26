@@ -1,6 +1,5 @@
 {
-  "customer":
-  {
+  "customer": {
     "email": "registered@example.com",
     "firstname": "A",
     "lastname": "Shopper",
@@ -36,5 +35,6 @@
         "telephone": "1234567890"
       }
     ]
-  }
+  },
+  "password": "dRYa2J3SpV0Y"
 }
