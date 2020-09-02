@@ -19,7 +19,7 @@ describe('Critical Path - Checkout', () => {
         setupCart(['radiantTeeAddToCart']);
     });
 
-    it.only('Guest Checkout', () => {
+    it('Guest Checkout', () => {
         cy.visit('/checkout');
         cy.contains('Order Summary');
         cy.contains('Email Address');
@@ -35,7 +35,7 @@ describe('Critical Path - Checkout', () => {
         cy.get(':input[type="submit"]:visible').click();
 
         cy.contains('Payment Method');
-        cy.get('#checkmo:visible').check();
+        // cy.get('#checkmo:visible').check();
         cy.get('#billing-address-same-as-shipping-checkmo').should('be.checked');
 
         cy.get('button.checkout[type="submit"]:visible').click();

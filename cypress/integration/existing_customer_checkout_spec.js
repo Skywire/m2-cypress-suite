@@ -66,7 +66,7 @@ describe('Critical Path - Checkout', () => {
 
         // billing
         cy.contains('Payment Method');
-        cy.get('#checkmo:visible').check();
+        // cy.get('#checkmo:visible').check();
         cy.get('#billing-address-same-as-shipping-checkmo').should('be.checked');
         cy.get('button.checkout[type="submit"]:visible').click();
 
