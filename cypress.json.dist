@@ -1,4 +1,7 @@
 {
-  "baseUrl": "",
-  "magePath": ''
+    "baseUrl": "",
+    "pageLoadTimeout": 60000,
+    "defaultCommandTimeout": 60000,
+    "execTimeout": 60000,
+    "taskTimeout": 60000
 }
