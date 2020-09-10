@@ -6,12 +6,14 @@
   "license": "(OSL-3.0 OR AFL-3.0)",
   "scripts": {
     "open": "cypress open",
-    "test": "cypress run"
+    "test": "cypress run",
+    "postinstall": "node postinstall.js"
   },
   "keywords": [],
   "dependencies": {
     "cypress": "^4.12.1",
     "cypress-intellij-reporter": "^0.0.4",
+    "ncp": "^2.0.0",
     "random-email": "^1.0.3"
   },
   "devDependencies": {
