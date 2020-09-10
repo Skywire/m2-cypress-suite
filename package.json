@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "tech@skywire.co.uk",
   "description": "Cypress test suite for Magento 2",
-  "license": "(OSL-3.0 OR AFL-3.0)",
+  "license": "OSL-3.0",
   "scripts": {
     "open": "cypress open",
     "test": "cypress run",
