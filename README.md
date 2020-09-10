@@ -3,15 +3,18 @@
 ## Installation
 
 ```
-git clone git@github.com:Skywire/m2-cypress-suite.git
-npm install
+npm install -save https://github.com/Skywire/m2-cypress-suite.git#master
 ```
+
+Test files will be installed to `dev/tests/cypress`
+
+A `cypress.json` file will be created in your project root
+
+You should configure cypress and then commit all generated files.
 
 ## Configuration
 
-`cp cypress.json.dist cypress.json`
-
-Add the `baseUrl` and `magePath` values to `cypress.json`
+Set the `baseUrl` in `cypress.json`
 
 * baseUrl: The full URL to your Magento instance e.g `https://docker.magento24.com`
 
@@ -19,8 +22,8 @@ Add the `baseUrl` and `magePath` values to `cypress.json`
 
 ### For interactive test runner
 
-`npm run open`
+`./node_modules/.bin/cypress open`
 
 ### For automated test runner
 
-`npm run test`
+`./node_modules/.bin/cypress run`
