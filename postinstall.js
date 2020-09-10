@@ -6,8 +6,14 @@ ncp.limit = 16;
 
 fs.mkdirSync(testPath, {recursive: true});
 
-ncp('.', testPath, {clobber: false}, function (result) {
-    console.log(result);
+ncp('cypress', testPath, {clobber: false}, function (result) {
+    if (result) {
+        console.log(result);
+    }
 });
 
-fs.rmdirSync(testPath + '/.git', {recursive: true});
+ncp('cypress.json.dist', `${process.env.INIT_CWD}/cypress.json`, {clobber: false}, (result) => {
+    if (result) {
+        console.log(result);
+    }
+});

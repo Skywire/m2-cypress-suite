@@ -3,5 +3,11 @@
     "pageLoadTimeout": 60000,
     "defaultCommandTimeout": 60000,
     "execTimeout": 60000,
-    "taskTimeout": 60000
+    "taskTimeout": 60000,
+    "fixturesFolder": "dev/tests/cypress/fixtures",
+    "integrationFolder": "dev/tests/cypress/integration",
+    "pluginsFile": "dev/tests/cypress/plugins/index.js",
+    "screenshotsFolder": "dev/tests/cypress/screenshots",
+    "videosFolder": "dev/tests/cypress/videos",
+    "supportFile": "dev/tests/cypress/support/index.js"
 }
