@@ -18,6 +18,12 @@ Set the `baseUrl` in `cypress.json`
 
 * baseUrl: The full URL to your Magento instance e.g `https://docker.magento24.com`
 
+## Form key toggle
+
+You will need to disable form key validation to allow for fixture HTTP requests
+
+https://github.com/Skywire/m2-module-form-key-toggle
+
 ## Usage
 
 ### For interactive test runner
